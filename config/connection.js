@@ -3,7 +3,6 @@
 
 module.exports = function(app) {
     var mysql = require("mysql");
-    // require('console.table');
 
     // connection to the database
     var connection = mysql.createConnection({

@@ -14,8 +14,9 @@ CREATE TABLE burgers (
 ); 
 
 
--- Create the burgers_db.
-CREATE DATABASE burgers_db;
--- Switch to or use the burgers_db.
-use burgers_db;
+
+
+
+
+
 
