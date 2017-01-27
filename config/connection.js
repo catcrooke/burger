@@ -1,25 +1,23 @@
 // * Inside the `connection.js` file, setup the code to connect Node to MySQL and query the database.
 // require the npm packages needed 
+var mysql = require("mysql");
 
-module.exports = function(app) {
-    var mysql = require("mysql");
+// connection to the database
+var connection = mysql.createConnection({
+    host: "localhost",
+    port: 3306,
 
-    // connection to the database
-    var connection = mysql.createConnection({
-        host: "localhost",
-        port: 3306,
+    // Your username
+    user: "root",
 
-        // Your username
-        user: "root",
+    // your password
+    password: "MySq12D4y!",
+    database: "burgers_db"
+});
+connection.connect(function(err) {
+    // if error reject a promise
+    if (err) failure(err);
+    console.log("connected as id " + connection.threadId);
+});
 
-        // your password
-        password: "MySq12D4y!",
-        database: "burgers_db"
-    });
-    connection.connect(function(err) {
-        // if error reject a promise
-        if (err) failure(err);
-        console.log("connected as id " + connection.threadId);
-
-    });
-};
+module.exports = connection;

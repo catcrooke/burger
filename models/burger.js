@@ -1,16 +1,32 @@
-module.exports = function(app) {
-    require("./config/connection.js")(app);
+// how you manipulate the data goes into model
+
+var connection = require("./config/connection.js");
+
+
+// Import the ORM to create functions that will interact with the database.
+// service layer
+var orm = require("../config/orm.js");
+
+var burger = {
+    all: function(cb) {
+        orm.all("burgers", function(res) {
+            cb(res);
+        });
+    },
+    // The variables cols and vals are arrays.
+    create: function(cols, vals, cb) {
+        orm.create("burgers", cols, vals, function(res) {
+            cb(res);
+        });
+    },
+    update: function(objColVals, condition, cb) {
+        orm.update("burgers", objColVals, condition, function(res) {
+            cb(res);
+        });
+    }
 };
 
-// Also inside burger.js, create the code that will call the ORM or query functions using burger
-// specific input for the ORM or query functions.
+// Export the database functions for the controller (burger_controller.js).
+module.exports = burger;
 
-// set a variable newBurger equal to an empty array that will hold the burgers added on click
-var newBurger = [];
 
-// function to add a burger to the newBurger array
-
-// var addBurger = function() {
-// 	
-// 	connection.query("INSERT INTO burgers SET ? WHERE ?"
-// };

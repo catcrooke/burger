@@ -1,21 +1,49 @@
-// Inside the burgers_controller.js file, import the following:
-// Express
-var express = require("express");
+                                                                                                                                   // require express
+                                                                                                                                   var express = require("express");
 
-var app = express();
+                                                                                                                                   // middleware passes
+                                                                                                                                   var router = express.Router();
 
-// import burgers.js
-require("./models/burger.js")(app);
+                                                                                                                                   // Import the model (cat.js) to use its database functions and set it equal to a variable
+                                                                                                                                   var burger = require("./models/burger.js")(app);
 
+                                                                                                                                   // ROUTERs- the code below points to the server with route files which are a map of how to respond
+                                                                                                                                   // when users visit/request data from URLS
 
+                                                                                                                                   // get requests are used to read a representation of a resource
+                                                                                                                                   router.get("/", function(req, res) {
+                                                                                                                                       cat.all(function(data) {
+                                                                                                                                           var hbsObject = {
+                                                                                                                                               burger: data
+                                                                                                                                           };
+                                                                                                                                           console.log(hbsObject);
+                                                                                                                                           res.render("index", hbsObject);
+                                                                                                                                       });
+                                                                                                                                   });
 
-// ================================================================================
-// ROUTER
-// The below points our server to a series of "route" files.
-// These routes give our server a "map" of how to respond when users visit or request data from various URLs.
-// ================================================================================
+                                                                                                                                   // post is used to create new resources, or in this example, create a new burger
+                                                                                                                                   router.post("/", function(req, res) {
+                                                                                                                                       burger.create([
+                                                                                                                                           "burger_name", "devoured", "date"
+                                                                                                                                       ], [
+                                                                                                                                           req.body.burger_name, req.body.devoured, req.body.date
+                                                                                                                                       ], function() {
+                                                                                                                                           res.redirect("/");
+                                                                                                                                       });
+                                                                                                                                   });
 
-// Create the router for the app, and export the router at the end of the file.
-module.exports = function(app) {
-    require("./config/connection.js")(app);
-};
+                                                                                                                                   // put is used to update resources, in this instance, whether a burger has been devoured or not
+                                                                                                                                   router.put("/:id", function(req, res) {
+                                                                                                                                       var condition = "id = " + req.params.id;
+
+                                                                                                                                       console.log("condition", condition);
+
+                                                                                                                                       burger.update({
+                                                                                                                                           devoured: req.body.devoured
+                                                                                                                                       }, condition, function() {
+                                                                                                                                           res.redirect("/");
+                                                                                                                                       });
+                                                                                                                                   });
+
+                                                                                                                                   // Export routes for server.js to use.
+                                                                                                                                   module.exports = router;
