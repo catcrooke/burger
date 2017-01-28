@@ -1,5 +1,5 @@
+// function to post burgers to the page after an on-submit event
 $(function() {
-    // $("#all-burger",) "#devoured-burger", "#post-burger"
     $("#post-burger").on("submit", function(e) {
         e.preventDefault();
         console.log($(this).serialize());
@@ -8,5 +8,3 @@ $(function() {
         });
     });
 });
-
-// onclick event to submit burgers
