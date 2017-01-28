@@ -11,13 +11,16 @@ var connection = mysql.createConnection({
     user: "root",
 
     // your password
-    password: "MySq12D4y!",
+    password: "",
     database: "burgers_db"
 });
 connection.connect(function(err) {
     // if error reject a promise
-    if (err) failure(err);
-    console.log("connected as id " + connection.threadId);
+    if (err) {
+        console.log(err);
+    } else {
+        console.log("connected as id " + connection.threadId);
+    }
 });
 
 module.exports = connection;

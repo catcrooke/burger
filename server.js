@@ -16,8 +16,11 @@ app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 // Set Handlebars.
 var exphbs = require("express-handlebars");
 
-app.engine('handlebars', exprhbs({ defaultLayout: 'main' }));
+app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
+
+// shortcut to file system
+app.use(express.static('public'));
 
 // Import routes and give the server access to them.
 var routes = require("./controllers/burger_controller.js");

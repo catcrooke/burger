@@ -27,8 +27,8 @@ function objToSql(ob) {
 
 // Object for all our SQL statement functions.
 var orm = {
-    all: function(tableInput, cb) {
-        var queryString = "SELECT * FROM " + tableInput + ";";
+    all: function(cb) {
+        var queryString = "SELECT * FROM burgers";
         connection.query(queryString, function(err, result) {
             if (err) {
                 throw err;
@@ -36,8 +36,8 @@ var orm = {
             cb(result);
         });
     },
-    create: function(table, cols, vals, cb) {
-        var queryString = "INSERT INTO " + table;
+    create: function(cols, vals, cb) {
+        var queryString = "INSERT INTO burgers";
 
         queryString += " (";
         queryString += cols.toString();
@@ -46,26 +46,25 @@ var orm = {
         queryString += printQuestionMarks(vals.length);
         queryString += ") ";
 
-        console.log(queryString);
+        console.log(queryString, vals);
 
         connection.query(queryString, vals, function(err, result) {
             if (err) {
                 throw err;
             }
-
             cb(result);
         });
     },
     // An example of objColVals would be {burger_name: double-double, devoured: true}
-    update: function(table, objColVals, condition, cb) {
-        var queryString = "UPDATE " + table;
+    update: function(objColVals, condition, cb) {
+        var queryString = "UPDATE burgers";
 
         queryString += " SET ";
         queryString += objToSql(objColVals);
         queryString += " WHERE ";
         queryString += condition;
 
-        console.log(queryString);
+        // console.log(queryString);
         connection.query(queryString, function(err, result) {
             if (err) {
                 throw err;
